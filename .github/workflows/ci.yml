@@ -56,10 +56,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'ghcr.io/mayar-2/my-mlops-lab2:sha-${{ github.sha }}'
-          format: 'table'
-          exit-code: '0'
-          ignore-unfixed: true
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'mlops-lab2:v1'
+        format: 'table'
+        exit-code: '0'
+        ignore-unfixed: true
+        severity: 'CRITICAL,HIGH'
+
+      
           severity: 'CRITICAL,HIGH'
