@@ -41,3 +41,4 @@ HEALTHCHECK --interval=30s \
 
 # استخدام المسار الكامل للـ uvicorn داخل البيئة الافتراضية للتأكد من عمله بدون أخطاء
 CMD ["/opt/venv/bin/uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY models/ ./models/
