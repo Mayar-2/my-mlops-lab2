@@ -26,7 +26,13 @@ def test_input_schema_validation():
 def test_model_loading_and_prediction():
     """4. اختبار التنبؤ الحتمي (Deterministic Prediction)"""
     # ضعِ بيانات صحيحة تتناسب مع نموذجك الفعلي
-    payload = {"feature1": 1.0, "feature2": 0.5, "feature3": 0.0, "feature4": 1.0, "feature5": 0.0} 
+    payload = {
+    "support_calls": 1.0,
+    "tenure_months": 12.0,
+    "internet_service": "DSL", # أو القيمة الرقمية المناسبة
+    "contract": "Month-to-month", # أو القيمة المناسبة
+    "monthly_charges": 50.0
+    }
     response = client.post("/predict", json=payload)
     if response.status_code == 200:
         data = response.json()
