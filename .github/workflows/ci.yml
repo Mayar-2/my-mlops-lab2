@@ -66,10 +66,7 @@ jobs:
          format: 'table'
          exit-code: '0' # أو '1' إذا كنتِ ترغبين بإيقاف الـ pipeline عند وجود ثغرات عالية
          sev-critical: 'CRITICAL'
-        image-ref: 'mlops-lab2:v1'
-        format: 'table'
-        exit-code: '0'
-        ignore-unfixed: true
+       
         severity: 'CRITICAL,HIGH'
 
       
