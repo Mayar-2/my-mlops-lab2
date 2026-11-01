@@ -60,8 +60,12 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
+        uses: aquasecurity/trivy-action@master
+        with:
+         image-ref: 'ghcr.io/${{ github.repository }}:latest'
+         format: 'table'
+         exit-code: '0' # أو '1' إذا كنتِ ترغبين بإيقاف الـ pipeline عند وجود ثغرات عالية
+         sev-critical: 'CRITICAL'
         image-ref: 'mlops-lab2:v1'
         format: 'table'
         exit-code: '0'
