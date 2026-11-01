@@ -10,3 +10,4 @@ To run the application container using Docker, run the following command:
 
 ```bash
 docker run -d -p 8000:8000 ghcr.io/mayar-2/my-mlops-lab2:latest
+

@@ -1,0 +1,109 @@
+[33mcommit 7cf50fb9a209d465d8dead4334f17abedf10dc52[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sun Nov 1 21:14:08 2026 +0300
+
+    Clean up CI configuration in ci.yml
+    
+    Removed redundant image reference and parameters.
+
+[33mcommit 8c8e40f30beae24064e4d825e2e015db2c46f920[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sun Nov 1 21:12:36 2026 +0300
+
+    Update ci.yml
+
+[33mcommit 6e551abcb2bb051400be34b6e244784666f0882c[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sun Nov 1 20:46:53 2026 +0300
+
+    Update CI workflow with permissions settings
+    
+    Add permissions for contents, packages, and security events
+
+[33mcommit 389181700fd6bbc17800013896dfeef270cd53d4[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 23:21:58 2026 +0300
+
+    Update Trivy scanner image reference and severity
+
+[33mcommit 375c9afb89b69d1774e1daba07ce59f2c54fff93[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 23:13:42 2026 +0300
+
+    Update image reference for Trivy scanner in CI
+
+[33mcommit 99dfa64358cf9ec05196a0631301c5f9844e93ae[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 23:11:36 2026 +0300
+
+    Update ci.yml
+
+[33mcommit 587f37c6eb5c48c80cbe6651333db3e229a468e7[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 23:06:02 2026 +0300
+
+    feat: add GHCR push and Trivy scan to CI pipeline
+
+[33mcommit a92f45be944c601c0eb122eb88898ef478060400[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 23:05:34 2026 +0300
+
+    Enhance CI workflow with Docker and vulnerability scanning
+    
+    Updated CI workflow to use specific versions of actions and added Docker image build and vulnerability scanning steps.
+
+[33mcommit 32b0fc382634e6293087a4f75610b24bbe2539db[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 22:52:53 2026 +0300
+
+    Initialize README with project details and usage
+    
+    Added project description and quick start instructions.
+
+[33mcommit 0c2ca06d91678b235509806bf52544502c7fc70c[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 20:01:48 2026 +0300
+
+    fix: use exact feature column names in pydantic schema and dataframe
+
+[33mcommit 57fd285bbd4fc4d58d9f60b94d656acafca71402[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 19:55:12 2026 +0300
+
+    fix: convert input data to pandas dataframe for column transformer compatibility
+
+[33mcommit 777799902a30cffb46bfd71146429c0a81c80f4b[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 19:48:22 2026 +0300
+
+    fix: update input schema to match 5 features expected by model pipeline
+
+[33mcommit ffbd065276fc3f80d121ce984fbea10c4adf243e[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 19:34:10 2026 +0300
+
+    fix: clean up main.py and finalize joblib model inference
+
+[33mcommit 2f30faa03666f4907691e775f78e1b2d8401d990[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 17:55:47 2026 +0300
+
+    feat: integrate trained model inference and update dockerfile for models
+
+[33mcommit 7742b29dffc514ab628295c2ef6ed1596a08ef69[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 17:00:06 2026 +0300
+
+    fix: clean requirements.txt and include httpx for starlette testclient
+
+[33mcommit dca8f7baf43d50548c3a3c633b22f824013854c0[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 16:56:15 2026 +0300
+
+    fix: add httpx and pytest dependencies to requirements.txt
+
+[33mcommit 037055ef4363dfccb6abb01462243d1c2d0206c0[m
+Author: Mayar-2 <mayarbaniyaseen6@gmail.com>
+Date:   Sat Oct 31 15:33:08 2026 +0300
+
+    feat: complete MLOps Lab 2 setup with FastAPI, Docker and CI workflow
