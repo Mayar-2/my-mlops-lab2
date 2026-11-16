@@ -111,7 +111,12 @@ def main() -> None:
 
             # the model, with its signature (inputs and outputs) and an example row
             signature = infer_signature(X_te, proba)
-            info = mlflow.sklearn.log_model(model, artifact_path="model", signature=signature, input_example=X_te.head(3))
+            info =mlflow.sklearn.log_model(
+                    model,
+                    name="model",                    
+                    signature=signature,
+                    skops_trusted_types=["sklearn.tree._tree.Tree"],)
+    
             mlflow.set_tag("model_uri", info.model_uri)
 
             print(f"{name:18s} run {run.info.run_id[:8]}  auc {metrics['auc']:.3f}  f1 {metrics['f1']:.3f}  "
