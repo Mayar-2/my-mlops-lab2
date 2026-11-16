@@ -1,45 +1,49 @@
-from fastapi.testclient import TestClient
-from src.app.main import app
+"""API contract tests: what callers of the service can rely on."""
 
-client = TestClient(app)
 
-def test_read_health():
-    """1. اختبار الـ health check والـ API contract"""
-    response = client.get("/health")
-    assert response.status_code == 200
-    data = response.json()
-    assert "status" in data
-    assert data["status"] == "healthy"
+def test_health_reports_model_version(client):
+    r = client.get("/health")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["status"] == "ok"
+    assert {"model_version", "data_file", "auc"} <= body.keys()
 
-def test_predict_endpoint_exists():
-    """2. اختبار وجود نقطة النهاية للـ predict"""
-    response = client.post("/predict", json={})
-    # حتى لو كان هناك خطأ في المدخلات (422) فهذا يثبت أن الـ endpoint موجود ويتحقق من الـ schema
-    assert response.status_code in [200, 422]
 
-def test_input_schema_validation():
-    """3. اختبار التحقق من مخطط المدخلات (Pydantic Input Validation)"""
-    # إرسال بيانات خاطئة أو غير مطابقة للـ schema المتوقعة
-    response = client.post("/predict", json={"invalid_field": -999})
-    assert response.status_code == 422
+def test_predict_returns_a_probability(client, customer):
+    r = client.post("/predict", json=customer)
+    assert r.status_code == 200
+    assert 0.0 <= r.json()["churn_probability"] <= 1.0
 
-def test_model_loading_and_prediction():
-    """4. اختبار التنبؤ الحتمي (Deterministic Prediction)"""
-    # ضعِ بيانات صحيحة تتناسب مع نموذجك الفعلي
-    payload = {
-    "support_calls": 1.0,
-    "tenure_months": 12.0,
-    "internet_service": "DSL", # أو القيمة الرقمية المناسبة
-    "contract": "Month-to-month", # أو القيمة المناسبة
-    "monthly_charges": 50.0
+
+def test_invalid_input_is_rejected(client, customer):
+    assert client.post("/predict", json={**customer, "contract": "weekly"}).status_code == 422
+    assert client.post("/predict", json={**customer, "support_calls": -1}).status_code == 422
+    assert client.post("/predict", json={"tenure_months": 5}).status_code == 422
+
+
+def test_risky_customer_scores_higher_than_loyal_customer(client):
+    """A behaviour test: a new, unhappy month-to-month customer must look riskier than a loyal one."""
+    risky = {
+        "tenure_months": 2,
+        "monthly_charges": 110,
+        "contract": "month-to-month",
+        "internet_service": "fiber",
+        "support_calls": 6,
     }
-    response = client.post("/predict", json=payload)
-    if response.status_code == 200:
-        data = response.json()
-        assert "prediction" in data
+    loyal = {
+        "tenure_months": 60,
+        "monthly_charges": 40,
+        "contract": "two-year",
+        "internet_service": "dsl",
+        "support_calls": 0,
+    }
+    p_risky = client.post("/predict", json=risky).json()["churn_probability"]
+    p_loyal = client.post("/predict", json=loyal).json()["churn_probability"]
+    assert p_risky > p_loyal
 
-def test_edge_case_handling():
-    """5. اختبار حالة حافة (Edge Case) مثل قيم متطرفة أو فارغة"""
-    response = client.post("/predict", json={"feature1": 999999.0, "feature2": -999999.0})
-    # التأكد من أن السيرفر لا ينهار (لا يعطي 500 Internal Server Error)
-    assert response.status_code != 500
+
+def test_metrics_endpoint_exposes_prometheus_metrics(client, customer):
+    client.post("/predict", json=customer)
+    text = client.get("/metrics").text
+    assert "http_requests_total" in text
+    assert "churn_prediction_probability_bucket" in text
