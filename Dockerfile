@@ -24,8 +24,9 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # نسخ الكود مع إعطاء الصلاحيات مباشرة للمستخدم appuser
 COPY --chown=appuser:appuser src/ ./src/
-COPY --chown=appuser:appuser models/ ./models/
-
+COPY --chown=appuser:appuser artifacts/model.joblib artifacts/metadata.json artifacts/champion.json ./models/
+ARG GIT_SHA=local
+RUN python -c "import json, pathlib; p = pathlib.Path('models/metadata.json'); m = json.loads(p.read_text()); m['model_version'] = '${GIT_SHA}'[:7]; p.write_text(json.dumps(m, indent=2))"
 # إنشاء المستخدم الآمن
 RUN useradd --create-home --uid 10001 appuser
 
@@ -41,4 +42,3 @@ HEALTHCHECK --interval=30s \
 
 # استخدام المسار الكامل للـ uvicorn داخل البيئة الافتراضية للتأكد من عمله بدون أخطاء
 CMD ["/opt/venv/bin/uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-COPY models/ ./models/
